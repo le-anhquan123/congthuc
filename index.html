@@ -73,12 +73,115 @@
         <nav class="bg-white shadow-xl rounded-2xl p-6 mb-8 transform hover:scale-[1.01] transition-transform duration-300">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4 section-title">Mục Lục</h2>
             <ul class="space-y-3">
+                <li><a href="#feca" class="text-blue-600 hover:underline nav-link block">Feca Pha Chế</a></li>
                 <li><a href="#coffee" class="text-blue-600 hover:underline nav-link block">Cà Phê</a></li>
                 <li><a href="#frappe" class="text-blue-600 hover:underline nav-link block">Đá Xay</a></li>
                 <li><a href="#matcha" class="text-blue-600 hover:underline nav-link block">Matcha</a></li>
                 <li><a href="#tea" class="text-blue-600 hover:underline nav-link block">Trà Sữa & Trà</a></li>
             </ul>
         </nav>
+
+        <!-- Feca Section -->
+        <section id="feca" class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">Feca Pha Chế</h2>
+            <div class="space-y-4">
+                <!-- Công thức nấu Tofu -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Công thức nấu Tofu</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Nguyên liệu:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Bột tofu (tàu hủ): 100g</li>
+                            <li>Nước: 500ml</li>
+                        </ul>
+                        <p><strong>Cách làm:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Giảm lửa xuống 800 (riu lửa).</li>
+                            <li>Vừa đổ bột vào vừa khuấy đều bằng muỗng.</li>
+                            <li>Khuấy xong, vừa lên tím thì tắt lửa.</li>
+                            <li>Cho trực tiếp vào hủ đựng tofu với 40g.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Công thức nấu Hồng Trà (Trà trái cây) -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Công thức nấu Hồng Trà (Trà trái cây)</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Nguyên liệu:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Hồng trà: 100g</li>
+                            <li>Nước: 1.400ml</li>
+                            <li>Đá: 400g</li>
+                        </ul>
+                        <p><strong>Cách làm:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Để nước sôi vào ca đong, bấm đồng hồ 2 phút để giảm nhiệt độ nước.</li>
+                            <li>Bỏ trà vào, đậy nắp hở, ủ trong 12 phút.</li>
+                            <li>Ủ xong, lấy ra cho chảy hết nước tự nhiên (không vắt).</li>
+                            <li>Cho đá vào.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Công thức nấu Olong + Hồng Trà (Olong Sữa) -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Công thức nấu Olong + Hồng Trà (Olong Sữa, 2 mẻ)</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Nguyên liệu:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Olong: 160g</li>
+                            <li>Hồng trà: 40g</li>
+                            <li>Nước: 2.000ml</li>
+                            <li>Nước đá: 400g</li>
+                        </ul>
+                        <p><strong>Cách làm:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Ủ trong 20 phút.</li>
+                            <li>Cho nước đá vào.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Công thức nấu Hồng Trà Sữa (2 mẻ) -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Công thức nấu Hồng Trà Sữa (2 mẻ)</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Nguyên liệu:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Hồng trà: 200g</li>
+                            <li>Nước: 2.000ml</li>
+                            <li>Nước đá: 400g</li>
+                        </ul>
+                        <p><strong>Cách làm:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Ủ trong 20 phút.</li>
+                            <li>Cho nước đá vào.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Kem Sữa -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Kem Sữa</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Nguyên liệu:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>On top: 310g</li>
+                            <li>Sữa tươi: 105g</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Nấu Trân Châu Đen -->
+                <div class="bg-white shadow-md rounded-xl overflow-hidden">
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Nấu Trân Châu Đen</button>
+                    <div class="accordion-content bg-gray-50 text-gray-600">
+                        <p><strong>Cách làm:</strong></p>
+                        <ul class="list-disc pl-6">
+                            <li>Đun sôi nước (không để trân châu chạm đáy).</li>
+                            <li>Nước sôi, hạ nhiệt xuống 1.600.</li>
+                            <li>Thả trân châu vào.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Coffee Section -->
         <section id="coffee" class="mb-12">
@@ -137,7 +240,7 @@
                 </div>
                 <!-- Bạc Xỉu Đá -->
                 <div class="bg-white shadow-md rounded-xl overflow-hidden">
-                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Bạc Xỉu Đá (Ly Nhựa Size L)</button>
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Bạc Xỉu Đá (Ly Nhựa lớn Nhựa Size L)</button>
                     <div class="accordion-content bg-gray-50 text-gray-600">
                         <p><strong>Nguyên liệu:</strong></p>
                         <ul class="list-disc pl-6">
@@ -184,13 +287,13 @@
                 </div>
                 <!-- Ngọc Trai FECA Size M -->
                 <div class="bg-white shadow-md rounded-xl overflow-hidden">
-                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Sữa Tươi CF (Ly Nhựa Size L)</button>
+                    <button class="accordion-button w-full text-left p-5 font-semibold text-lg bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700" onclick="toggleAccordion(this)">Ngọc Trai FECA</button>
                     <div class="accordion-content bg-gray-50 text-gray-600">
                         <p><strong>Nguyên liệu:</strong></p>
                         <ul class="list-disc pl-6">
-                            <li>Trân châu trắng : 40g (size M) , 50g (size L)</li>
-                            <li>Mix Ngọc Trai Feca : 84ml (size M) , 132ml (size L)</li>
-                            <li>Thêm đá cách miệng ly 1cm </li>
+                            <li>Trân châu trắng: 40g (size M), 50g (size L)</li>
+                            <li>Mix Ngọc Trai Feca: 84ml (size M), 132ml (size L)</li>
+                            <li>Thêm đá cách miệng ly 1cm</li>
                             <li>Kem sữa: 65ml đổ đều lên bằng phẳng</li>
                             <li>Trang trí: Rắc cacao bề mặt</li>
                         </ul>
@@ -269,7 +372,7 @@
                     <div class="accordion-content bg-gray-50 text-gray-600">
                         <p><strong>Nguyên liệu:</strong></p>
                         <ul class="list-disc pl-6">
-                            <li>Matcha nhật Haru: 5g + 50 ml nước sôi </li>
+                            <li>Matcha nhật Haru: 5g + 50 ml nước sôi</li>
                             <li>Sữa tươi Oatside: 150ml</li>
                             <li>Vanila: 15ml</li>
                             <li>Sữa đặc: 30ml</li>
@@ -328,7 +431,7 @@
                             <li>Cốt dừa: 50g</li>
                             <li>Đường cát: 30g</li>
                             <li>Bột Frap: 20g</li>
-                            <li>1 ly đá L</li>             
+                            <li>1 ly đá L</li>
                         </ul>
                         <p><strong>Cách làm:</strong> Xay trong 20-30s, đánh 35ml CF nước tạo bọt, đổ hỗn hợp đá xay vào ly CF bọt vừa đánh</p>
                     </div>
