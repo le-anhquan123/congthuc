@@ -129,6 +129,29 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
         }
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .share-section {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .share-url {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body>
@@ -137,8 +160,18 @@
     </header>
 
     <main class="container mx-auto p-6 max-w-5xl">
+        <div id="messages"></div>
+        
+        <div class="share-section">
+            <h3 class="font-semibold mb-2">🔗 Chia sẻ công thức</h3>
+            <p class="text-sm text-gray-600 mb-2">Link này sẽ được cập nhật tự động khi bạn thêm/sửa công thức:</p>
+            <div class="share-url" id="shareUrl">Đang tạo link...</div>
+            <button onclick="copyShareUrl()" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Sao chép link</button>
+        </div>
+
         <div class="mb-6">
-            <button onclick="openModal('add')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Thêm Công Thức</button>
+            <button onclick="openModal('add')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mr-2">Thêm Công Thức</button>
+            <button onclick="resetToDefault()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">Khôi phục mặc định</button>
         </div>
 
         <nav class="bg-white shadow-xl rounded-2xl p-6 mb-8 transform hover:scale-[1.01] transition-transform duration-300">
@@ -220,77 +253,24 @@
                 { id: 'feca2', name: 'Công thức nấu Hồng Trà (Trà trái cây)', ingredients: ['Hồng trà: 100g', 'Nước: 1.400ml', 'Đá: 400g'], instructions: ['Để nước sôi vào ca đong, bấm đồng hồ 2 phút để giảm nhiệt độ nước.', 'Bỏ trà vào, đậy nắp hở, ủ trong 12 phút.', 'Ủ xong, lấy ra cho chảy hết nước tự nhiên (không vắt).', 'Cho đá vào.'], notes: '' },
                 { id: 'feca3', name: 'Công thức nấu Olong + Hồng Trà (Olong Sữa, 2 mẻ)', ingredients: ['Olong: 160g', 'Hồng trà: 40g', 'Nước: 2.000ml', 'Nước đá: 400g'], instructions: ['Ủ trong 20 phút.', 'Cho nước đá vào.'], notes: '' },
                 { id: 'feca4', name: 'Công thức nấu Hồng Trà Sữa (2 mẻ)', ingredients: ['Hồng trà: 200g', 'Nước: 2.000ml', 'Nước đá: 400g'], instructions: ['Ủ trong 20 phút.', 'Cho nước đá vào.'], notes: '' },
-                { id: 'feca5', name: 'Kem Sữa', ingredients: ['Sữa tươi (khối lượng nhỏ): 50g', 'ON TOP (khối lượng nhỏ): 105g', 'Sữa tươi (khối lượng lớn): 100g', 'ON TOP (khối lượng lớn): 210g'], instructions: [], notes: 'Cho toàn bộ nguyên liệu vào ca, khuấy đều cho hợp, nguyên liệu có thể, sau đó sử dụng máy đánh kem đánh ở mức 4 trong 35s thêm 5s nếu thấy vẫn còn lỏng.' },
-                { id: 'feca6', name: 'Nấu Trân Châu Đen', ingredients: [], instructions: ['Đun sôi nước (không để trân châu chạm đáy).', 'Nước sôi, hạ nhiệt xuống 1.600.', 'Thả trân châu vào.'], notes: '' },
-                { id: 'feca7', name: 'Công thức pha Cà Phê Muối (6 ly M)', ingredients: ['Cà phê nước: 120ml', 'Sữa đặc: 216g', 'Kem sữa: 198g (18 thìa)', 'Muối: 2g', 'Size M: 100ml', 'Size L: 150ml'], instructions: [], notes: '' },
-                { id: 'feca8', name: 'Công thức pha Cà Phê Muối (12 ly M)', ingredients: ['Cà phê nước: 240ml', 'Sữa đặc: 432g', 'Kem sữa: 396g', 'Muối: 4g', 'Size M: 100ml', 'Size L: 150ml'], instructions: [], notes: '' },
-                { id: 'feca9', name: 'Công thức pha Cà Phê Muối (18 ly M)', ingredients: ['Cà phê nước: 360g', 'Sữa đặc: 648g', 'Kem sữa: 594g', 'Muối: 6g', 'Size M: 100ml', 'Size L: 150ml'], instructions: [], notes: '' },
-                { id: 'feca10', name: 'Công thức pha Cà Phê Kem Sữa (10 ly M)', ingredients: ['Cà phê nước: 140ml', 'Sữa tươi: 560g', 'Nước đường: 160g'], instructions: [], notes: 'Cho toàn bộ nguyên liệu vào ly (pha theo ly) hoặc ca (pha số lượng lớn), dùng thìa khuấy đều cho hợp hơn.' },
-                { id: 'feca11', name: 'Công thức pha Cà Phê Kem Sữa (1 ly M)', ingredients: ['Cà phê nước: 14g', 'Sữa tươi: 56g', 'Nước đường: 16g'], instructions: [], notes: 'Cho toàn bộ nguyên liệu vào ly (pha theo ly) hoặc ca (pha số lượng lớn), dùng thìa khuấy đều cho hợp hơn.' },
-                { id: 'feca12', name: 'Công thức pha Cà Phê Kem Sữa (1 ly L)', ingredients: ['Cà phê nước: 22g', 'Sữa tươi: 88g', 'Nước đường: 25g'], instructions: [], notes: 'Cho toàn bộ nguyên liệu vào ly (pha theo ly) hoặc ca (pha số lượng lớn), dùng thìa khuấy đều cho hợp hơn.' },
-                { id: 'feca13', name: 'Nước Đường', ingredients: ['Đường cát (khối lượng nhỏ): 1000g', 'Nước sôi 100% (khối lượng nhỏ): 700g', 'Đường cát (khối lượng lớn): 2000g', 'Nước sôi 100% (khối lượng lớn): 1400g'], instructions: [], notes: '' },
-                { id: 'feca14', name: 'Kem Matcha', ingredients: ['Sữa tươi (1 ly): 30g', 'Bột matcha (1 ly): 4g', 'Sữa đặc (1 ly): 14g', 'Rick lùn (1 ly): 30g', 'Sữa tươi (4 ly): 120g', 'Bột matcha (4 ly): 16g', 'Sữa đặc (4 ly): 56g', 'Rick lùn (4 ly): 120g'], instructions: [], notes: 'Cho lần lượt SỮA TƯƠI, BỘT MATCHA dùng thìa khuấy đều sau đó dùng máy đánh bột (ly), đánh kem (ca) trong 30s cho tan bột matcha. Đóng tiếp SỮA ĐẶC, RICK LÙN vào và đánh tiếp từ 1p30s - 2p cho sệt mịn.' }
+                { id: 'feca5', name: 'Kem Sữa', ingredients: ['Sữa tươi (khối lượng nhỏ): 50g', 'ON TOP (khối lượng nhỏ): 105g', 'Sữa tươi (khối lượng lớn): 100g', 'ON TOP (khối lượng lớn): 210g'], instructions: [], notes: 'Cho toàn bộ nguyên liệu vào ca, khuấy đều cho hợp, nguyên liệu có thể, sau đó sử dụng máy đánh kem đánh ở mức 4 trong 35s thêm 5s nếu thấy vẫn còn lỏng.' }
             ],
             coffee: [
                 { id: 'coffee1', name: 'Espresso Đá', ingredients: ['Cà phê máy 1 shot', '80% ngọt: 6ml đường', '100% ngọt: 8ml đường', '120% ngọt: 10ml đường'], instructions: ['Trình bày đá riêng'], notes: '' },
-                { id: 'coffee2', name: 'Espresso Sữa Đá', ingredients: ['Cà phê máy 1 shot', '80% ngọt: 14g sữa đặc', '100% ngọt: 28g sữa đặc', '120% ngọt: 42g sữa đặc'], instructions: ['Trình bày đá riêng'], notes: '' },
-                { id: 'coffee3', name: 'Phin Đen Đá', ingredients: ['CF phin: 40ml (M), 45ml (L)', 'Đường: 8ml (M), 12ml (L)'], instructions: [], notes: '' },
-                { id: 'coffee4', name: 'Phin Sữa Đá', ingredients: ['CF phin: 45ml (M), 60ml (L)', 'Sữa đặc: 2pump 28g (M), 3pump 42g (L)'], instructions: ['Trình bày đá riêng'], notes: '' },
-                { id: 'coffee5', name: 'Bạc Xỉu Đá (Ly Nhựa lớn Nhựa Size L)', ingredients: ['Cà phê máy 1 shot', 'Sữa đặc: 70g', 'Sữa tươi: 30g'], instructions: ['Đổ vào bình shake đánh bằng máy đánh sữa, làm nguội đổ ra ly và bỏ đá'], notes: '' },
-                { id: 'coffee6', name: 'Bạc Xỉu Nóng', ingredients: ['Cà phê máy 1 shot', 'Sữa đặc: 56g', 'Sữa tươi: 20g'], instructions: ['Ngâm bình lắc và tách trong nước sôi 100 độ làm nóng, khuấy đều tới khi tan đổ ra tách đã làm nóng'], notes: '' },
-                { id: 'coffee7', name: 'Café Muối', ingredients: ['CF muối: 70ml (M), 110ml (L)'], instructions: ['Bỏ bình lắc, lắc đều cho ra ly thêm 1 muỗng kem và cacao trang trí'], notes: '' },
-                { id: 'coffee8', name: 'Sữa Tươi CF (Ly Nhựa Size L)', ingredients: ['Sữa tươi: 130g (130ml)', 'Nước đường: 28g (24ml)', 'CF nước: 10ml'], instructions: ['Khuấy đều cho đá gần đầy ly, CF nước 10ml rưới lên bề mặt ly'], notes: '' },
-                { id: 'coffee9', name: 'Ngọc Trai FECA', ingredients: ['Trân châu trắng: 40g (size M), 50g (size L)', 'Mix Ngọc Trai Feca: 84ml (size M), 132ml (size L)', 'Thêm đá cách miệng ly 1cm', 'Kem sữa: 65ml đổ đều lên bằng phẳng', 'Trang trí: Rắc cacao bề mặt'], instructions: ['Khuấy đều cho đá gần đầy ly, CF nước 10ml rưới lên bề mặt ly'], notes: '' },
-                { id: 'coffee10', name: 'Cacao Đá', ingredients: ['Nước đường: 40g (40ml)', 'Bột cacao: 20g', 'Nước sôi: 80g'], instructions: ['Dùng máy đánh bọt đánh tan hỗn hợp và để nguội, sau đó đổ vào ly và cho đá đầy'], notes: '' },
-                { id: 'coffee11', name: 'Cacao Sữa Đá', ingredients: ['Sữa đặc: 56g', 'Bột cacao: 20g', 'Nước sôi: 80g'], instructions: ['Dùng máy đánh bọt đánh tan hỗn hợp và để nguội, sau đó đổ vào ly và cho đá đầy'], notes: '' },
-                { id: 'coffee12', name: 'Ủ Cà Phê Phin (Dùng Cà Phê Gu Việt Xay Sẵn)', ingredients: ['Cà phê Gu Việt (xay sẵn): 150g (cho 1 phin)', 'Nước sôi (lần 1): 250ml', 'Nước sôi (lần 2): 330ml'], instructions: ['Cho 150g cà phê vào phin, vỗ nhẹ để bề mặt cà phê đều.', 'Nén cà phê: Nam nén ở mức độ 4 (trên thang 10), nữ nén ở mức độ 6 hoặc 7 (chặt hơn).', 'Lần 1: Đổ 250ml nước sôi vào phin, đậy nắp và ủ trong 13 phút (giữ nắp nén).', 'Sau khi ủ xong, mở nắp, gạt cà phê dính trên nắp nén xuống, rải đều lại bề mặt cà phê, nén nhẹ tay.', 'Lần 2: Đổ 330ml nước sôi vào phin, giữ nắp nén.', 'Khi nước chảy hết, nghiêng phin để kiểm tra xem nước đã chảy hết chưa.'], notes: '' }
+                { id: 'coffee2', name: 'Espresso Sữa Đá', ingredients: ['Cà phê máy 1 shot', '80% ngọt: 14g sữa đặc', '100% ngọt: 28g sữa đặc', '120% ngọt: 42g sữa đặc'], instructions: ['Trình bày đá riêng'], notes: '' }
             ],
             matcha: [
-                { id: 'matcha1', name: 'Matcha Coco', ingredients: ['Nước dừa: 150ml', 'Nước đường: 23g (2 pump)', 'Kem Matcha: 70g (150ml)'], instructions: ['Khuấy đều sau đó đổ đá ngang miệng ly, trang trí bột matcha'], notes: '' },
-                { id: 'matcha2', name: 'Matcha Latte', ingredients: ['Bột: 5g + 50ml nước sôi', 'Sữa tươi: 150ml', 'Vanila: 15ml', 'Sữa đặc: 30ml'], instructions: ['Dùng máy đánh bọt đánh tan matcha', 'Đong vào ly size L 3 hỗn hợp', 'Sau đó múc đá cách mép ly 1cm', 'Rưới matcha lên'], notes: '' },
-                { id: 'matcha3', name: 'Matcha Tofu', ingredients: ['Matcha nhật Haru: 5g + 50 ml nước sôi', 'Sữa tươi Oatside: 150ml', 'Vanila: 15ml', 'Sữa đặc: 30ml', 'Tofu: 1 hộp'], instructions: [], notes: '' }
+                { id: 'matcha1', name: 'Matcha Coco', ingredients: ['Nước dừa: 150ml', 'Nước đường: 23g (2 pump)', 'Kem Matcha: 70g (150ml)'], instructions: ['Khuấy đều sau đó đổ đá ngang miệng ly, trang trí bột matcha'], notes: '' }
             ],
             frappe: [
-                { id: 'frappe1', name: 'Cookie Đá Xay', ingredients: ['5 Oreo (4.5 cho vào cối, 0.5 trang trí)', 'Sữa tươi: 70g', 'Rick lùn: 60g', 'Bột Frappe: 20g', 'Đường cát: 30g', '1 ly đá L'], instructions: ['Xay hỗn hợp tới khi đá nát và đổ ra ly, xịt kem lên trên và trang trí 0.5 Oreo đập vụn rắc lên bề mặt'], notes: '' },
-                { id: 'frappe2', name: 'Choco', ingredients: ['Sữa tươi: 30g', 'Rick Lùn: 25g', 'Sữa đặc: 54g', 'Bột cacao: 15g', 'Đường cát: 20g', 'Bột Frap: 15g', '1 ly đá L'], instructions: ['Xay hỗn hợp tới khi đá nát và đổ ra ly, xịt kem và trang trí bột cacao, 2g hạnh nhân'], notes: '' },
-                { id: 'frappe3', name: 'Cốt Dừa Đá Xay', ingredients: ['Rick Lùn: 35g', 'Sữa đặc: 50g', 'Cốt dừa: 50g', 'Đường cát: 30g', 'Bột Frap: 20g', '1 ly đá L'], instructions: ['Xay trong 20-30s, đánh 35ml CF nước tạo bọt, đổ hỗn hợp đá xay vào ly CF bọt vừa đánh'], notes: '' },
-                { id: 'frappe4', name: 'CF Cốt Dừa Đá Viên (Không Cần Đánh Bọng)', ingredients: ['Rick Lùn: 22g (22ml) size (M), 28g (28ml) size (L)', 'Sữa đặc: 30g (30ml) size (M), 40g (40ml) size (L)', 'Cốt dừa: 32g (32ml) size (M), 44g (44ml) size (L)', 'Nước đường: 14g (12ml) size (M), 18g (16ml) size (L)', 'CF nước: 28ml (size M), 38ml (size L)'], instructions: ['Khuấy đều hỗn hợp, sau đó đong CF nước vào bình lắc với đá riêng rồi đổ lên trên hỗn hợp'], notes: '' },
-                { id: 'frappe5', name: 'CF Kem Sữa', ingredients: ['TC trắng: 40g (size M), 50g (size L) cho vào đầu tiên', 'Cốt CF kem sữa: 84ml (size M), 132ml (size L)', 'Kem sữa: 65ml (size M, L)'], instructions: ['Thêm đá cách miệng ly 1cm, đổ kem sữa đều lên, rắc cacao lên mặt'], notes: '' }
+                { id: 'frappe1', name: 'Cookie Đá Xay', ingredients: ['5 Oreo (4.5 cho vào cối, 0.5 trang trí)', 'Sữa tươi: 70g', 'Rick lùn: 60g', 'Bột Frappe: 20g', 'Đường cát: 30g', '1 ly đá L'], instructions: ['Xay hỗn hợp tới khi đá nát và đổ ra ly, xịt kem lên trên và trang trí 0.5 Oreo đập vụn rắc lên bề mặt'], notes: '' }
             ],
             tea: [
-                { id: 'tea1', name: 'Feca Olong Sữa', ingredients: ['Cốt trà sữa olong: 80g (size M), 120g (size L)', 'Bột sữa Frima: 10g (size M), 15g (size L)', 'Sữa đặc Lamosa 80%: 23g (size M), 45g (size L)', 'Sữa đặc Lamosa 100%: 45g (size M), 60g (size L)', 'Sữa đặc Lamosa 120%: 60g (size M), 75g (size L)'], instructions: ['Khuấy đều nhẹ tay, sử dụng sục để đánh vị và hương lên, sau khi sục khuấy tan bột sữa và cho đá vào'], notes: '1 pump = 12/13g' },
-                { id: 'tea2', name: 'Feca Truyền Thống', ingredients: ['Cốt tsua truyền thống: 80g (size M), 120g (size L)', 'Bột sữa Frima: 5g (size M), 7.5g (size L)', 'Sữa đặc Lamosa 80%: 23g (size M), 45g (size L)', 'Sữa đặc Lamosa 100%: 45g (size M), 60g (size L)', 'Sữa đặc Lamosa 120%: 60g (size M), 75g (size L)'], instructions: ['Khuấy đều nhẹ tay, sử dụng sục để đánh vị và hương lên, sau khi sục khuấy tan bột sữa và cho đá vào'], notes: '' },
-                { id: 'tea3', name: 'Trà Sữa Cốm', ingredients: ['80g Cốm', 'Dùng công thức pha Trà sữa truyền thống FECA size M', 'TC trắng: 30g'], instructions: ['Dùng muỗng đánh đều cốm quanh thành ly, sau khi chét còn 60g cốm, đổ trà sữa vào, đổ đá gần đầy miệng ly, cho TC trắng lên trang trí'], notes: '' },
-                { id: 'tea4', name: 'Trà Sữa Trân Châu Đường Đen', ingredients: ['Sốt đường đen (size M): 15g (xịt vòng đều miệng ly, tán đều xung quanh thành ly)', 'Trân châu đường đen (size M): 40g', 'Cốt trà sữa truyền thống size M', 'Sốt đường đen (size L): 20g (xịt vòng đều miệng ly, tán đều xung quanh thành ly)', 'Trân châu đường đen (size L): 50g', 'Cốt trà sữa truyền thống size L'], instructions: ['Xịt đều sốt đường đen lên thành ly, cho trân châu vào đáy ly, đổ cốt trà sữa truyền thống vào, thêm đá gần đầy miệng ly.'], notes: '' },
-                { id: 'tea5', name: 'Sữa Tươi Trân Châu Đường Đen', ingredients: ['Sốt đường đen (size M): 15g (xịt vòng đều miệng ly, tán đều xung quanh thành ly)', 'Nước đường đen (size M): 15g', 'Trân châu đường đen (size M): 40g', 'Sữa tươi (size M): 120ml', 'Sốt đường đen (size L): 20g (xịt vòng đều miệng ly, tán đều xung quanh thành ly)', 'Nước đường đen (size L): 20g', 'Trân châu đường đen (size L): 50g', 'Sữa tươi (size L): 150ml'], instructions: ['Xịt đều sốt đường đen lên thành ly, cho trân châu vào đáy ly, thêm nước đường đen và sữa tươi, thêm đá gần đầy miệng ly.'], notes: '' },
-                { id: 'tea6', name: 'Olong Mãng Cầu', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 15ml (size M), 20ml (size L)', 'Nước đường 100%: 25ml (size M), 30ml (size L)', 'Nước đường 120%: 35ml (size M), 40ml (size L)', 'Mứt mãng cầu: 50g (size M), 60g (size L)', 'Tắc: 1 trái (M), 2 trái (L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: mứt mãng cầu 10g'], notes: '' },
-                { id: 'tea7', name: 'Olong Xoài', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 20ml (size M), 30ml (size L)', 'Nước đường 100%: 30ml (size M), 40ml (size L)', 'Nước đường 120%: 40ml (size M), 50ml (size L)', 'Mứt xoài: 40ml (size M), 50ml (size L)', 'Tắc: 1 trái (M), 2 trái (L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: Chanh vàng lá chè xanh để lên miệng ly'], notes: '' },
-                { id: 'tea8', name: 'Olong Mâm Xôi Lựu', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 15ml (size M), 20ml (size L)', 'Nước đường 100%: 25ml (size M), 30ml (size L)', 'Nước đường 120%: 35ml (size M), 40ml (size L)', 'Mứt Phúc bồn tử: 25ml (size M), 30ml (size L)', 'Syrup lựu: 20ml (size M), 25ml (size L)', 'Tắc: 1 trái (M, L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: Lá trà'], notes: '' },
-                { id: 'tea9', name: 'Olong Ổi Hồng', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 0ml (size M), 10ml (size L)', 'Nước đường 100%: 10ml (size M), 20ml (size L)', 'Nước đường 120%: 20ml (size M), 30ml (size L)', 'Mứt ổi: 25ml (size M), 35g (size L)', 'Syrup ổi: 20ml (size M), 30ml (size L)', 'Tắc: 1 trái nhỏ (M), 1 trái (L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: 3 lát ổi + ổi hạt lựu 20g'], notes: '' },
-                { id: 'tea10', name: 'Olong Chanh Dây', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 20ml (size M), 10ml (size L)', 'Nước đường 100%: 30ml (size M), 20ml (size L)', 'Nước đường 120%: 40ml (size M), 30ml (size L)', 'Mứt Đào mật ong: 30ml (size M), 30ml (size L)', 'Mứt chanh dây: 20ml (size M), 30ml (size L)', 'Tắc: 1 trái nhỏ (M), 1 trái (L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: 3 lát đào + mứt chanh dây 10ml'], notes: '' },
-                { id: 'tea11', name: 'Olong Habicus', ingredients: ['Cốt trà: 100ml (size M), 120ml (size L)', 'Nước đường 80%: 15ml (size M), 25ml (size L)', 'Nước đường 100%: 25ml (size M), 35ml (size L)', 'Nước đường 120%: 35ml (size M), 45ml (size L)', 'Mứt Habicus: 40g (size M), 50g (size L)', 'Chanh: 1/2 trái', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều, múc đá đổ đầy ly và cho thạch vào, trang trí: 2 miếng hoa hồng mứt'], notes: '' },
-                { id: 'tea12', name: 'Trà Đào', ingredients: ['Cốt trà: 110ml (size M), 130ml (size L)', 'Nước nóng: 20ml', 'Nước đường 80%: 0ml (size M, L)', 'Nước đường 100%: 10ml (size M, L)', 'Nước đường 120%: 20ml (size M, L)', 'Mứt Đào: 15ml (size M), 20ml (size L)', 'Syrup đào: 25ml (size M), 30ml (size L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều 2 vòng, múc đá đổ đầy ly và cho thạch vào, trang trí: 3 lát đào'], notes: '' },
-                { id: 'tea13', name: 'Trà Vải', ingredients: ['Cốt trà: 110ml (size M), 130ml (size L)', 'Nước nóng: 20ml', 'Nước đường 80%: 0ml (size M, L)', 'Nước đường 100%: 10ml (size M, L)', 'Nước đường 120%: 20ml (size M, L)', 'Mứt Vải: 15ml (size M), 20ml (size L)', 'Syrup Vải: 35ml (size M), 40ml (size L)', 'Tắc: 0.5 trái (size M), 1 trái (size L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều 2 vòng, múc đá đổ đầy ly và cho thạch vào, trang trí: 3 trái vải'], notes: '' },
-                { id: 'tea14', name: 'Hồng Trà Chanh', ingredients: ['Cốt trà: 110ml (size M), 130ml (size L)', 'Nước nóng: 20ml', 'Nước đường 80%: 40ml (size M), 50ml (size L)', 'Nước đường 100%: 50ml (size M), 60ml (size L)', 'Nước đường 120%: 60ml (size M), 70ml (size L)', 'Chanh: 0.5 trái (size M, L)', 'Tắc: 0.5 trái (size M, L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều 2 vòng, múc đá đổ đầy ly và cho thạch vào, trang trí: cắt 3 lát chanh để lên trên'], notes: '' },
-                { id: 'tea15', name: 'Hồng Trà Chanh Mật Ong', ingredients: ['Cốt trà: 110ml (size M), 130ml (size L)', 'Nước nóng: 20ml', 'Nước đường 80%: 0ml (size M, L)', 'Nước đường 100%: 10ml (size M, L)', 'Nước đường 120%: 20ml (size M, L)', 'Mật ong: 30ml (size M), 40ml (size L)', 'Tắc: 1.5 trái (size M), 2 trái (size L)', 'Thạch Konjac: 30g'], instructions: ['Khuấy đều 2 vòng, múc đá đổ đầy ly và cho thạch vào, trang trí: cắt 3 lát chanh và 0.5 tắc để lên miệng ly'], notes: '' },
-                { id: 'tea16', name: 'Cốt Trà Ô Long', ingredients: ['Trà Ô Long: 110g', 'Nước sôi: 1400ml'], instructions: ['110g trà Ô Long cho vào túi vải thắt kín', 'Khi nước sôi, đổ ra ngoài ca đong lớn để nguội trong thời gian 3 phút', 'Sau 3 phút, bỏ Túi Trà vào đáy ca nhựa, đong 1400ml nước nóng vào, ấn nhẹ túi trà để ngập sâu trong nước. Đậy nắp và ủ trong vòng 12 phút (lưu ý kéo sợi dây kẹp vào miệng ca nhựa)', 'Sau 12 phút ủ, kéo túi trà lên để chảy tự nhiên lượng nước còn lại trong túi (không ép nén túi trà)', 'Đổ 400g đá bi vào trong Nước Trà mới ủ, khuấy tan. Cất trữ trong Bình Đá giữ nhiệt'], notes: 'Thành phẩm: khoảng 1500ml Cốt Trà' }
+                { id: 'tea1', name: 'Feca Olong Sữa', ingredients: ['Cốt trà sữa olong: 80g (size M), 120g (size L)', 'Bột sữa Frima: 10g (size M), 15g (size L)', 'Sữa đặc Lamosa 80%: 23g (size M), 45g (size L)', 'Sữa đặc Lamosa 100%: 45g (size M), 60g (size L)', 'Sữa đặc Lamosa 120%: 60g (size M), 75g (size L)'], instructions: ['Khuấy đều nhẹ tay, sử dụng sục để đánh vị và hương lên, sau khi sục khuấy tan bột sữa và cho đá vào'], notes: '1 pump = 12/13g' }
             ]
         };
 
-        // Load recipes with fallback
-        let recipes = defaultRecipes;
-        try {
-            const storedRecipes = localStorage.getItem('recipes');
-            if (storedRecipes) {
-                recipes = JSON.parse(storedRecipes);
-                console.log('Loaded recipes from localStorage:', recipes);
-            } else {
-                console.log('No recipes in localStorage, using defaultRecipes');
-            }
-        } catch (e) {
-            console.error('Failed to parse localStorage recipes:', e);
-            localStorage.setItem('recipes', JSON.stringify(defaultRecipes));
-        }
+        let recipes = JSON.parse(JSON.stringify(defaultRecipes));
 
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -299,18 +279,104 @@
             });
         }
 
+        function showMessage(message, type = 'success') {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error-message' : 'success-message';
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        function compressData(data) {
+            try {
+                return btoa(encodeURIComponent(JSON.stringify(data)));
+            } catch (e) {
+                console.error('Compression failed:', e);
+                return null;
+            }
+        }
+
+        function decompressData(compressed) {
+            try {
+                return JSON.parse(decodeURIComponent(atob(compressed)));
+            } catch (e) {
+                console.error('Decompression failed:', e);
+                return null;
+            }
+        }
+
+        function updateShareUrl() {
+            try {
+                const compressed = compressData(recipes);
+                if (compressed) {
+                    const currentUrl = new URL(window.location);
+                    currentUrl.searchParams.set('data', compressed);
+                    const shareUrl = currentUrl.toString();
+                    document.getElementById('shareUrl').textContent = shareUrl;
+                    
+                    // Update browser URL without page reload
+                    window.history.replaceState({}, '', shareUrl);
+                }
+            } catch (e) {
+                console.error('Failed to update share URL:', e);
+                document.getElementById('shareUrl').textContent = 'Lỗi tạo link chia sẻ';
+            }
+        }
+
+        function copyShareUrl() {
+            const shareUrl = document.getElementById('shareUrl').textContent;
+            if (shareUrl && shareUrl !== 'Đang tạo link...' && shareUrl !== 'Lỗi tạo link chia sẻ') {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showMessage('Đã sao chép link chia sẻ!');
+                }).catch(() => {
+                    showMessage('Không thể sao chép link. Vui lòng sao chép thủ công.', 'error');
+                });
+            }
+        }
+
+        function loadDataFromUrl() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const compressedData = urlParams.get('data');
+                
+                if (compressedData) {
+                    const decompressed = decompressData(compressedData);
+                    if (decompressed) {
+                        recipes = decompressed;
+                        showMessage('Đã tải dữ liệu từ link chia sẻ!');
+                        return true;
+                    }
+                }
+                return false;
+            } catch (e) {
+                console.error('Failed to load data from URL:', e);
+                showMessage('Lỗi khi tải dữ liệu từ link', 'error');
+                return false;
+            }
+        }
+
+        function resetToDefault() {
+            if (confirm('Bạn có chắc muốn khôi phục về công thức mặc định? Tất cả thay đổi sẽ bị mất.')) {
+                recipes = JSON.parse(JSON.stringify(defaultRecipes));
+                renderRecipes();
+                updateShareUrl();
+                showMessage('Đã khôi phục về công thức mặc định!');
+            }
+        }
+
         function toggleAccordion(button) {
             try {
-                console.log('Toggling accordion for:', button.textContent);
                 const content = button.nextElementSibling;
                 if (!content || !content.classList.contains('accordion-content')) {
-                    console.error('No valid accordion-content found after button:', button);
                     return;
                 }
                 const isOpen = content.classList.contains('open');
                 content.classList.toggle('open', !isOpen);
                 button.classList.toggle('open', !isOpen);
-                console.log('Accordion state:', { isOpen: !isOpen, contentHeight: content.scrollHeight });
             } catch (e) {
                 console.error('Error in toggleAccordion:', e);
             }
@@ -343,7 +409,6 @@
                 }
 
                 modal.classList.add('open');
-                console.log(`Opened modal in ${mode} mode`, recipe);
             } catch (e) {
                 console.error('Error opening modal:', e);
             }
@@ -352,7 +417,6 @@
         function closeModal() {
             try {
                 document.getElementById('recipeModal').classList.remove('open');
-                console.log('Closed modal');
             } catch (e) {
                 console.error('Error closing modal:', e);
             }
@@ -360,18 +424,15 @@
 
         function renderRecipes() {
             try {
-                console.log('Starting renderRecipes');
                 const sections = ['feca', 'coffee', 'frappe', 'matcha', 'tea'];
                 sections.forEach(section => {
                     const container = document.getElementById(`${section}-recipes`);
                     if (!container) {
-                        console.error(`Container ${section}-recipes not found`);
                         return;
                     }
                     container.innerHTML = '';
 
                     if (!recipes[section] || !Array.isArray(recipes[section])) {
-                        console.warn(`No valid recipes for section ${section}`);
                         container.innerHTML = `<div class="error-message">Không tìm thấy công thức cho ${section}. Vui lòng thêm công thức mới.</div>`;
                         return;
                     }
@@ -392,16 +453,10 @@
                             </div>
                         `;
                         container.appendChild(recipeDiv);
-                        console.log(`Rendered recipe: ${recipe.name} in ${section}`);
                     });
                 });
             } catch (e) {
                 console.error('Error in renderRecipes:', e);
-                const main = document.querySelector('main');
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
-                errorDiv.textContent = 'Có lỗi khi tải công thức. Vui lòng kiểm tra Console để biết chi tiết.';
-                main.insertBefore(errorDiv, main.firstChild);
             }
         }
 
@@ -410,9 +465,6 @@
                 const recipe = recipes[section].find(r => r.id === id);
                 if (recipe) {
                     openModal('edit', { ...recipe, section });
-                    console.log(`Editing recipe: ${id} in ${section}`);
-                } else {
-                    console.error(`Recipe ${id} not found in ${section}`);
                 }
             } catch (e) {
                 console.error('Error editing recipe:', e);
@@ -423,9 +475,9 @@
             try {
                 if (confirm('Bạn có chắc muốn xóa công thức này?')) {
                     recipes[section] = recipes[section].filter(r => r.id !== id);
-                    localStorage.setItem('recipes', JSON.stringify(recipes));
                     renderRecipes();
-                    console.log(`Deleted recipe: ${id} from ${section}`);
+                    updateShareUrl();
+                    showMessage('Đã xóa công thức!');
                 }
             } catch (e) {
                 console.error('Error deleting recipe:', e);
@@ -447,30 +499,37 @@
                     Object.keys(recipes).forEach(sec => {
                         recipes[sec] = recipes[sec].filter(r => r.id !== id);
                     });
-                    console.log(`Updated recipe: ${id}`);
-                } else {
-                    console.log(`Added recipe: ${id}`);
                 }
 
                 // Add new or updated recipe
                 if (!recipes[section]) recipes[section] = [];
                 recipes[section].push({ id, name, ingredients, instructions, notes });
-                localStorage.setItem('recipes', JSON.stringify(recipes)); // Ensure save after update
+                
                 renderRecipes();
+                updateShareUrl();
                 closeModal();
+                showMessage(document.getElementById('recipeId').value ? 'Đã cập nhật công thức!' : 'Đã thêm công thức mới!');
             } catch (e) {
                 console.error('Error submitting form:', e);
+                showMessage('Lỗi khi lưu công thức', 'error');
             }
         });
 
         // Initialize
         try {
+            // Try to load data from URL first
+            if (!loadDataFromUrl()) {
+                // If no URL data, use default recipes
+                recipes = JSON.parse(JSON.stringify(defaultRecipes));
+            }
+            
             renderRecipes();
-            console.log('Initial render complete');
+            updateShareUrl();
         } catch (e) {
-            console.error('Initial render failed:', e);
-            localStorage.setItem('recipes', JSON.stringify(defaultRecipes));
+            console.error('Initialization failed:', e);
+            recipes = JSON.parse(JSON.stringify(defaultRecipes));
             renderRecipes();
+            updateShareUrl();
         }
     </script>
 </body>
