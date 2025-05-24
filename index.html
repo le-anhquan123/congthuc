@@ -45,7 +45,7 @@
             transition: max-height 0.3s ease-out, padding 0.3s ease-out;
         }
         .accordion-content.open {
-            max-height: 2000px; /* Increased for larger content */
+            max-height: 2000px;
             padding: 1rem;
         }
         .nav-link {
@@ -331,7 +331,7 @@
                 if (mode === 'edit' && recipe) {
                     title.textContent = 'Sửa Công Thức';
                     recipeName.value = recipe.name;
-                    recipeSection.value = recipe.section || 'frappe'; // Default to frappe if not set
+                    recipeSection.value = recipe.section || 'frappe';
                     recipeIngredients.value = recipe.ingredients.join('\n');
                     recipeInstructions.value = recipe.instructions.join('\n');
                     recipeNotes.value = recipe.notes || '';
@@ -368,7 +368,7 @@
                         console.error(`Container ${section}-recipes not found`);
                         return;
                     }
-                    container.innerHTML = ''; // Clear existing content
+                    container.innerHTML = '';
 
                     if (!recipes[section] || !Array.isArray(recipes[section])) {
                         console.warn(`No valid recipes for section ${section}`);
@@ -387,7 +387,8 @@
                                 ${recipe.notes ? `<p><strong>Ghi chú:</strong> ${recipe.notes}</p>` : ''}
                             </div>
                             <div class="flex justify-end p-2">
-                                <button onclick="editRecipe('${recipe.id}', '${section}')" class="text-blue-600 hover:text-blue-800">Sửa</button>
+                                <button onclick="editRecipe('${recipe.id}', '${section}')" class="text-blue-600 hover:text-blue-800 mr-2">Sửa</button>
+                                <button onclick="deleteRecipe('${recipe.id}', '${section}')" class="text-red-600 hover:text-red-800">Xóa</button>
                             </div>
                         `;
                         container.appendChild(recipeDiv);
@@ -418,6 +419,19 @@
             }
         }
 
+        function deleteRecipe(id, section) {
+            try {
+                if (confirm('Bạn có chắc muốn xóa công thức này?')) {
+                    recipes[section] = recipes[section].filter(r => r.id !== id);
+                    localStorage.setItem('recipes', JSON.stringify(recipes));
+                    renderRecipes();
+                    console.log(`Deleted recipe: ${id} from ${section}`);
+                }
+            } catch (e) {
+                console.error('Error deleting recipe:', e);
+            }
+        }
+
         document.getElementById('recipeForm').addEventListener('submit', function(e) {
             e.preventDefault();
             try {
@@ -428,6 +442,7 @@
                 const instructions = document.getElementById('recipeInstructions').value.split('\n').filter(line => line.trim());
                 const notes = document.getElementById('recipeNotes').value;
 
+                // Remove old recipe if editing
                 if (document.getElementById('recipeId').value) {
                     Object.keys(recipes).forEach(sec => {
                         recipes[sec] = recipes[sec].filter(r => r.id !== id);
@@ -437,9 +452,10 @@
                     console.log(`Added recipe: ${id}`);
                 }
 
+                // Add new or updated recipe
                 if (!recipes[section]) recipes[section] = [];
                 recipes[section].push({ id, name, ingredients, instructions, notes });
-                localStorage.setItem('recipes', JSON.stringify(recipes));
+                localStorage.setItem('recipes', JSON.stringify(recipes)); // Ensure save after update
                 renderRecipes();
                 closeModal();
             } catch (e) {
