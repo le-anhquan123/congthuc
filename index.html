@@ -136,22 +136,6 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
         }
-        .share-section {
-            background: #f0f9ff;
-            border: 1px solid #0ea5e9;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .share-url {
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 0.25rem;
-            padding: 0.5rem;
-            word-break: break-all;
-            font-family: monospace;
-            font-size: 0.875rem;
-        }
     </style>
 </head>
 <body>
@@ -161,13 +145,6 @@
 
     <main class="container mx-auto p-6 max-w-5xl">
         <div id="messages"></div>
-        
-        <div class="share-section">
-            <h3 class="font-semibold mb-2">🔗 Chia sẻ công thức</h3>
-            <p class="text-sm text-gray-600 mb-2">Link này sẽ được cập nhật tự động khi bạn thêm/sửa công thức:</p>
-            <div class="share-url" id="shareUrl">Đang tạo link...</div>
-            <button onclick="copyShareUrl()" class="mt-2 bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">Sao chép link</button>
-        </div>
 
         <div class="mb-6">
             <button onclick="openModal('add')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mr-2">Thêm Công Thức</button>
@@ -291,79 +268,10 @@
             }, 3000);
         }
 
-        function compressData(data) {
-            try {
-                return btoa(encodeURIComponent(JSON.stringify(data)));
-            } catch (e) {
-                console.error('Compression failed:', e);
-                return null;
-            }
-        }
-
-        function decompressData(compressed) {
-            try {
-                return JSON.parse(decodeURIComponent(atob(compressed)));
-            } catch (e) {
-                console.error('Decompression failed:', e);
-                return null;
-            }
-        }
-
-        function updateShareUrl() {
-            try {
-                const compressed = compressData(recipes);
-                if (compressed) {
-                    const currentUrl = new URL(window.location);
-                    currentUrl.searchParams.set('data', compressed);
-                    const shareUrl = currentUrl.toString();
-                    document.getElementById('shareUrl').textContent = shareUrl;
-                    
-                    // Update browser URL without page reload
-                    window.history.replaceState({}, '', shareUrl);
-                }
-            } catch (e) {
-                console.error('Failed to update share URL:', e);
-                document.getElementById('shareUrl').textContent = 'Lỗi tạo link chia sẻ';
-            }
-        }
-
-        function copyShareUrl() {
-            const shareUrl = document.getElementById('shareUrl').textContent;
-            if (shareUrl && shareUrl !== 'Đang tạo link...' && shareUrl !== 'Lỗi tạo link chia sẻ') {
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    showMessage('Đã sao chép link chia sẻ!');
-                }).catch(() => {
-                    showMessage('Không thể sao chép link. Vui lòng sao chép thủ công.', 'error');
-                });
-            }
-        }
-
-        function loadDataFromUrl() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const compressedData = urlParams.get('data');
-                
-                if (compressedData) {
-                    const decompressed = decompressData(compressedData);
-                    if (decompressed) {
-                        recipes = decompressed;
-                        showMessage('Đã tải dữ liệu từ link chia sẻ!');
-                        return true;
-                    }
-                }
-                return false;
-            } catch (e) {
-                console.error('Failed to load data from URL:', e);
-                showMessage('Lỗi khi tải dữ liệu từ link', 'error');
-                return false;
-            }
-        }
-
         function resetToDefault() {
             if (confirm('Bạn có chắc muốn khôi phục về công thức mặc định? Tất cả thay đổi sẽ bị mất.')) {
                 recipes = JSON.parse(JSON.stringify(defaultRecipes));
                 renderRecipes();
-                updateShareUrl();
                 showMessage('Đã khôi phục về công thức mặc định!');
             }
         }
@@ -476,7 +384,6 @@
                 if (confirm('Bạn có chắc muốn xóa công thức này?')) {
                     recipes[section] = recipes[section].filter(r => r.id !== id);
                     renderRecipes();
-                    updateShareUrl();
                     showMessage('Đã xóa công thức!');
                 }
             } catch (e) {
@@ -506,7 +413,6 @@
                 recipes[section].push({ id, name, ingredients, instructions, notes });
                 
                 renderRecipes();
-                updateShareUrl();
                 closeModal();
                 showMessage(document.getElementById('recipeId').value ? 'Đã cập nhật công thức!' : 'Đã thêm công thức mới!');
             } catch (e) {
@@ -517,19 +423,12 @@
 
         // Initialize
         try {
-            // Try to load data from URL first
-            if (!loadDataFromUrl()) {
-                // If no URL data, use default recipes
-                recipes = JSON.parse(JSON.stringify(defaultRecipes));
-            }
-            
+            recipes = JSON.parse(JSON.stringify(defaultRecipes));
             renderRecipes();
-            updateShareUrl();
         } catch (e) {
             console.error('Initialization failed:', e);
             recipes = JSON.parse(JSON.stringify(defaultRecipes));
             renderRecipes();
-            updateShareUrl();
         }
     </script>
 </body>
